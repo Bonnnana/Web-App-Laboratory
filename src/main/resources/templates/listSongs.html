@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>All Songs</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="..." crossorigin="anonymous">
+</head>
+<body>
+
+<div>
+  <section class="jumbotron text-center">
+    <div class="container">
+      <h1 class="jumbotron-heading">SONGS HOMEPAGE</h1>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h2>All Songs:</h2>
+
+        <!-- Error message -->
+
+
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th></th>
+            <th>TrackId</th>
+            <th>Title</th>
+            <th>Genre</th>
+            <th>Release Year</th>
+            <th>Album</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="song : ${songs}">
+            <td>
+              <!-- Associate radio button with the form using the 'form' attribute -->
+              <input type="radio" name="trackId" th:value="${song.trackId}" form="selectSongForm">
+            </td>
+            <td th:text="${song.trackId}">TrackId</td>
+            <td th:text="${song.title}">Title</td>
+            <td th:text="${song.genre}">Genre</td>
+            <td th:text="${song.releaseYear}">Year</td>
+            <td th:text="${song.album.name}">Album</td>
+            <td>
+              <a th:href="@{/songs/edit-form/{id}(id=${song.id})}" class="btn btn-outline-secondary btn-sm">Edit</a>
+              <!-- Delete form -->
+              <form th:action="@{/songs/delete/{id}(id=${song.id})}" th:method="DELETE" style="display:inline;">
+                <input type="hidden" name="_method" value="DELETE">
+                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+              </form>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <div th:if="${hasError}" class="text-danger" th:text="${error}"></div>
+        <!-- Form for the Select button -->
+        <form id="selectSongForm" th:action="@{/songs/submit}" th:method="post">
+          <div class="d-flex justify-content-end">
+            <a th:href="@{/songs/add-form}" class="btn btn-primary">Add New Song</a>
+            <button type="submit" class="btn btn-primary ml-2">Select</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

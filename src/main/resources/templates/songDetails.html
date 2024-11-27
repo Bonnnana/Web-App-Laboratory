@@ -1,0 +1,46 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Song Details</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+
+<div xmlns:th="http://www.thymeleaf.org">
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading" th:text="${songTitle}">Song Title</h1>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Details</h2>
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <strong>Genre:</strong> <span th:text="${songGenre}">Genre</span>
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Release Year:</strong> <span th:text="${songRelease}">Year</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h2>Performers</h2>
+                <ul class="list-group">
+                    <li class="list-group-item" th:each="artist : ${songPerformers}" th:text="|${artist.firstName} ${artist.lastName}|">
+                        Performer Name
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="d-flex justify-content-end mt-4">
+            <a href="/artist" class="btn btn-primary">Back to Artists</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,68 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Add new Performer to Song</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+
+<div>
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">SELECT ARTIST TO ADD AS PERFORMER</h1>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="row">
+            <!-- Artist Selection Section -->
+            <div class="col-md-8">
+                <h2>Select Artist:</h2>
+                <form th:method="POST" th:action="@{/artist}">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Select</th>
+                            <th>Name</th>
+                            <th>Surname</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="artist : ${artists}">
+                            <td>
+                                <input type="radio" name="artistId" th:value="${artist.getId()}" required>
+                            </td>
+                            <td th:text="${artist.firstName}">Artist First Name</td>
+                            <td th:text="${artist.lastName}">Artist Last Name</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary">Select</button>
+                        <a href="/songs" class="btn btn-primary ml-3">Back to Songs</a>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-md-4">
+                <h3>Selected Song:</h3>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Track ID</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td th:text="${trackId}">No track selected</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
