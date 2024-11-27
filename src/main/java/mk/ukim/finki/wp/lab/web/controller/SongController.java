@@ -95,6 +95,8 @@ public class SongController {
         if (trackId == null || trackId.isEmpty()) {
             return "redirect:/songs?error=SongNotSelected";
         }
+
+
         req.getSession().setAttribute("trackId", trackId);
         return "redirect:/artist";
     }

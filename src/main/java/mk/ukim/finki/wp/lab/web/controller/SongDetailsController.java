@@ -33,6 +33,9 @@ public class SongDetailsController {
             songService.addArtistToSong(selectedArtist, song);
         }
 
+        Integer views = songService.songViews(song.getId());
+        model.addAttribute("views", views);
+
         model.addAttribute("songTitle", song.getTitle());
         model.addAttribute("songGenre", song.getGenre());
         model.addAttribute("songRelease", song.getReleaseYear());

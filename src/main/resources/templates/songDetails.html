@@ -26,6 +26,12 @@
                         <strong>Release Year:</strong> <span th:text="${songRelease}">Year</span>
                     </li>
                 </ul>
+                <h2>Song Views</h2>
+                <ul class="list-group">
+                    <li class="list-group-item" th:text="|${views}|">
+                        Views
+                    </li>
+                </ul>
             </div>
             <div class="col-md-6">
                 <h2>Performers</h2>
@@ -34,6 +40,7 @@
                         Performer Name
                     </li>
                 </ul>
+
             </div>
         </div>
         <div class="d-flex justify-content-end mt-4">

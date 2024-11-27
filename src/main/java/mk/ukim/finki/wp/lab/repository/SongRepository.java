@@ -3,6 +3,7 @@ package mk.ukim.finki.wp.lab.repository;
 import mk.ukim.finki.wp.lab.model.Album;
 import mk.ukim.finki.wp.lab.model.Artist;
 import mk.ukim.finki.wp.lab.model.Song;
+import mk.ukim.finki.wp.lab.model.exceptions.SongNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -66,5 +67,20 @@ public class SongRepository {
 
     public void deleteById(Long id){
         songs.removeIf(i-> i.getId().equals(id));
+    }
+
+    public Integer songCounts(Long id){
+        Song song =songs.stream()
+                .filter(i-> i.getId().equals(id))
+                .findFirst()
+                .orElse(null);
+        if (song!=null){
+            Integer views = song.getViews();
+            views++;
+            song.setViews(views);
+            return song.getViews();
+        }else{
+            throw new SongNotFoundException(id);
+        }
     }
 }

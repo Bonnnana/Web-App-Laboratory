@@ -35,11 +35,10 @@ public class ArtistController {
     }
 
     @PostMapping
-    protected String addArtist(HttpServletRequest request){
+    protected String addArtist(HttpServletRequest request, Model model){
         long id = Long.parseLong(request.getParameter("artistId"));
         Artist artist = artistService.findById(id);
         request.getSession().setAttribute("selectedArtist",artist);
         return "redirect:/songDetails";
-
     }
 }
