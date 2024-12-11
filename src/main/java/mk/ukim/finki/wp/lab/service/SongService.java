@@ -15,4 +15,6 @@ public interface SongService {
     public Optional<Song> findById(Long id);
     void deleteById(Long id);
     public Integer songViews(Long id);
+    public List<Song> findByAlbumId(Long albumId);
+
 }

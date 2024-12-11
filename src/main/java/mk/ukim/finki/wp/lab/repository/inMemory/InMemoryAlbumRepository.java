@@ -1,7 +1,6 @@
-package mk.ukim.finki.wp.lab.repository;
+package mk.ukim.finki.wp.lab.repository.inMemory;
 
 import mk.ukim.finki.wp.lab.model.Album;
-import mk.ukim.finki.wp.lab.model.Song;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -9,10 +8,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class AlbumRepository {
+public class InMemoryAlbumRepository {
     private List<Album> albums;
 
-    public AlbumRepository() {
+    public InMemoryAlbumRepository() {
         albums = new ArrayList<>();
 
         albums.add(new Album("The Dark Side of the Moon", "Hip Hop", "1973"));

@@ -26,17 +26,32 @@ public class SongController {
     }
 
     @GetMapping
-    public String getSongsPage(@RequestParam(required=false) String error, Model model){
-        if(error!= null && !error.isEmpty()){
+    public String getSongsPage(@RequestParam(required = false) Long albumId,
+                               @RequestParam(required = false) String error,
+                               Model model) {
+        if (error != null && !error.isEmpty()) {
             model.addAttribute("hasError", true);
             model.addAttribute("error", error);
         }
 
+        // Fetch all albums for the dropdown
+        List<Album> albums = this.albumService.findAll();
+        model.addAttribute("albums", albums);
+
+        // Fetch all songs for the main table
         List<Song> songs = this.songService.listSongs();
         model.addAttribute("songs", songs);
 
+        // Fetch filtered songs if albumId is provided
+        if (albumId != null) {
+            List<Song> filteredSongs = this.songService.findByAlbumId(albumId);
+            model.addAttribute("filteredSongs", filteredSongs);
+            model.addAttribute("selectedAlbumId", albumId);
+        }
+
         return "listSongs";
     }
+
 
     @PostMapping("/add")
     public String saveSong(@RequestParam String trackId,
@@ -44,6 +59,7 @@ public class SongController {
                            @RequestParam String genre,
                            @RequestParam Integer releaseYear,
                            @RequestParam Long albumId){
+
         this.songService.save(trackId, title, genre, releaseYear, albumId);
         return "redirect:/songs";
     }
@@ -56,6 +72,7 @@ public class SongController {
                            @RequestParam Integer releaseYear,
                            @RequestParam Long albumId) {
         if (this.songService.findById(songId).isPresent()) {
+
             this.songService.save(trackId, title, genre, releaseYear, albumId);
         }
         return "redirect:/songs";
