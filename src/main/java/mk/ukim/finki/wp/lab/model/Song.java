@@ -21,6 +21,9 @@ public class Song {
 
     private int releaseYear;
 
+    @OneToMany
+    private List<Review> songReviews;
+
     @ManyToMany
     @JoinTable(
             name = "song_artist",

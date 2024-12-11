@@ -2,12 +2,14 @@ package mk.ukim.finki.wp.lab.service.impl;
 
 import mk.ukim.finki.wp.lab.model.Album;
 import mk.ukim.finki.wp.lab.model.Artist;
+import mk.ukim.finki.wp.lab.model.Review;
 import mk.ukim.finki.wp.lab.model.Song;
 import mk.ukim.finki.wp.lab.model.exceptions.AlbumNotFoundException;
 import mk.ukim.finki.wp.lab.model.exceptions.ArtistNotFoundException;
 import mk.ukim.finki.wp.lab.model.exceptions.SongNotFoundException;
 import mk.ukim.finki.wp.lab.repository.jpa.AlbumRepository;
 import mk.ukim.finki.wp.lab.repository.jpa.ArtistRepository;
+import mk.ukim.finki.wp.lab.repository.jpa.ReviewRepository;
 import mk.ukim.finki.wp.lab.repository.jpa.SongRepository;
 import mk.ukim.finki.wp.lab.service.SongService;
 import org.springframework.stereotype.Service;
@@ -22,11 +24,14 @@ public class SongServiceImpl implements SongService {
     private final SongRepository songRepository;
     private final AlbumRepository albumRepository;
     private final ArtistRepository artistRepository;
+    private final ReviewRepository reviewRepository;
 
-    public SongServiceImpl(SongRepository songRepository, AlbumRepository albumRepository, ArtistRepository artistRepository) {
+
+    public SongServiceImpl(SongRepository songRepository, AlbumRepository albumRepository, ArtistRepository artistRepository, ReviewRepository reviewRepository) {
         this.songRepository = songRepository;
         this.albumRepository = albumRepository;
         this.artistRepository = artistRepository;
+        this.reviewRepository = reviewRepository;
     }
 
     @Override
@@ -38,10 +43,27 @@ public class SongServiceImpl implements SongService {
         return this.songRepository.findAllByAlbum_Id(albumId);
     }
 
+    @Override
+    public List<Review> getReviewsByTrackId(String trackId) {
+        Song song = songRepository.findByTrackId(trackId);
+        return song.getSongReviews();
+    }
+
+    @Override
+    public void addReviewToSong(String trackId, String reviewText) {
+        Song song= songRepository.findByTrackId(trackId);
+        Review review = new Review(reviewText);
+
+        song.getSongReviews().add(review);
+
+        reviewRepository.save(review);
+        songRepository.save(song);
+
+    }
+
 
     @Override
     public Artist addArtistToSong(Artist a, Song s) {
-        // Fetch the song and artist from the database
         Long songId = s.getId();
         Long artistId = a.getId();
 
@@ -60,7 +82,6 @@ public class SongServiceImpl implements SongService {
             artist.getSongs().add(song);
         }
 
-        // Save the changes
         songRepository.save(song);
         artistRepository.save(artist);
 

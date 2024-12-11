@@ -1,6 +1,7 @@
 package mk.ukim.finki.wp.lab.service;
 
 import mk.ukim.finki.wp.lab.model.Artist;
+import mk.ukim.finki.wp.lab.model.Review;
 import mk.ukim.finki.wp.lab.model.Song;
 
 import java.util.List;
@@ -16,5 +17,7 @@ public interface SongService {
     void deleteById(Long id);
     public Integer songViews(Long id);
     public List<Song> findByAlbumId(Long albumId);
+    public List<Review> getReviewsByTrackId(String trackId);
+    void addReviewToSong(String trackId, String reviewText);
 
 }
