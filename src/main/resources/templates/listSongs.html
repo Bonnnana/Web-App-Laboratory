@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8"/>
   <title>All Songs</title>
@@ -10,8 +10,17 @@
 
 <div>
   <section class="jumbotron text-center">
-    <div class="container">
+    <div class="container d-flex justify-content-between align-items-center">
       <h1 class="jumbotron-heading">SONGS HOMEPAGE</h1>
+
+      <!-- Logout button -->
+      <div>
+        <th:block sec:authorize="isAuthenticated()">
+          <form th:action="@{/logout}" method="post" style="display:inline;">
+            <button type="submit" class="btn btn-secondary">Logout</button>
+          </form>
+        </th:block>
+      </div>
     </div>
   </section>
 
@@ -47,12 +56,18 @@
             <td th:text="${song.releaseYear}">Year</td>
             <td th:text="${song.album.name}">Album</td>
             <td>
+              <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+
               <a th:href="@{/songs/edit-form/{id}(id=${song.id})}" class="btn btn-outline-secondary btn-sm">Edit</a>
+              </th:block>
+
               <!-- Delete form -->
+              <th:block sec:authorize="hasRole('ROLE_ADMIN')">
               <form th:action="@{/songs/delete/{id}(id=${song.id})}" th:method="DELETE" style="display:inline;">
                 <input type="hidden" name="_method" value="DELETE">
                 <button type="submit" class="btn btn-danger btn-sm">Delete</button>
               </form>
+              </th:block>
             </td>
           </tr>
           </tbody>
@@ -61,7 +76,7 @@
         <!-- Form for the Select button -->
         <form id="selectSongForm" th:action="@{/songs/submit}" th:method="post">
           <div class="d-flex justify-content-end">
-            <a th:href="@{/songs/add-form}" class="btn btn-primary">Add New Song</a>
+            <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/songs/add-form}" class="btn btn-primary">Add New Song</a>
             <button type="submit" class="btn btn-primary ml-2">Select</button>
           </div>
         </form>

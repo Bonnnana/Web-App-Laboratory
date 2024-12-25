@@ -13,6 +13,7 @@ public class Review {
     private String reviewText;
 
     @ManyToOne
+    @JoinColumn(name = "song_reviewed_id", nullable = false) // Maps the foreign key column
     private Song songReviewed;
 
     public Review() {

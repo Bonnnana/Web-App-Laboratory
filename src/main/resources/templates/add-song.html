@@ -1,4 +1,4 @@
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8"/>
     <title>Products</title>
@@ -20,10 +20,19 @@
 
 <div xmlns:th="http://www.thymeleaf.org">
     <section class="jumbotron text-center">
-        <div class="container">
+        <div class="container d-flex justify-content-between align-items-center">
             <h1 class="jumbotron-heading">ADD OR EDIT A SONG</h1>
+            <div>
+                <th:block sec:authorize="isAuthenticated()">
+                    <form th:action="@{/logout}" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-secondary">Logout</button>
+                    </form>
+                </th:block>
+            </div>
         </div>
+
     </section>
+
 
     <div class="container">
         <div class="row">

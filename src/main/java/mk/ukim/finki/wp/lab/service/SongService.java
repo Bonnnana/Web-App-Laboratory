@@ -17,7 +17,7 @@ public interface SongService {
     void deleteById(Long id);
     public Integer songViews(Long id);
     public List<Song> findByAlbumId(Long albumId);
-    public List<Review> getReviewsByTrackId(String trackId);
-    void addReviewToSong(String trackId, String reviewText);
+    public List<Review> getReviewsById(Long id);
+    void addReviewToSong(Long id, String reviewText);
 
 }

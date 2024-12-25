@@ -41,23 +41,24 @@ public class SongDetailsController {
         model.addAttribute("views", views);
 
         model.addAttribute("songTitle", song.getTitle());
+        model.addAttribute("songId", song.getId());
         model.addAttribute("songGenre", song.getGenre());
         model.addAttribute("songRelease", song.getReleaseYear());
         model.addAttribute("songPerformers", song.getPerformers());
 
         // Add reviews to the context
-        List<Review> reviews = songService.getReviewsByTrackId(song.getTrackId());
+        List<Review> reviews = songService.getReviewsById(song.getId());
         model.addAttribute("reviews", reviews);
         return "songDetails";
     }
 
     @PostMapping("/addReview")
     public String addReview(HttpServletRequest req){
-        String trackId = (String) req.getSession().getAttribute("trackId");
+        Long songId = (Long) req.getSession().getAttribute("songId");
         String reviewText = req.getParameter("reviewText");
 
         if (reviewText != null && !reviewText.trim().isEmpty()) {
-            songService.addReviewToSong(trackId, reviewText);
+            songService.addReviewToSong(songId, reviewText);
         }
 
         return "redirect:/songDetails";

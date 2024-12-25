@@ -44,15 +44,17 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
-    public List<Review> getReviewsByTrackId(String trackId) {
-        Song song = songRepository.findByTrackId(trackId);
+    public List<Review> getReviewsById(Long id) {
+        Song song = songRepository.findById(id).orElseThrow();
         return song.getSongReviews();
     }
 
     @Override
-    public void addReviewToSong(String trackId, String reviewText) {
-        Song song= songRepository.findByTrackId(trackId);
+    public void addReviewToSong(Long id, String reviewText) {
+        Song song= songRepository.findById(id)
+                .orElseThrow(() -> new SongNotFoundException(id));;
         Review review = new Review(reviewText);
+        review.setSongReviewed(song);
 
         song.getSongReviews().add(review);
 

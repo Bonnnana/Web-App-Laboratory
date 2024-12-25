@@ -115,6 +115,7 @@ public class SongController {
 
 
         req.getSession().setAttribute("trackId", trackId);
+        req.getSession().setAttribute("songId", songService.findByTrackId(trackId).getId());
         return "redirect:/artist";
     }
 

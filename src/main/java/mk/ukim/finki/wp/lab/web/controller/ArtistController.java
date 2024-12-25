@@ -27,8 +27,10 @@ public class ArtistController {
         List<Artist> artists = artistService.listArtists();
         model.addAttribute("artists", artists);
         String trackId = (String) request.getSession().getAttribute("trackId");
+        Long songId = (Long) request.getSession().getAttribute("songId");
         if (trackId != null) {
             model.addAttribute("trackId", trackId);
+            model.addAttribute("songId", trackId);
         }
 
        return "artistsList";
