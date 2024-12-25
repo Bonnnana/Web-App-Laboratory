@@ -3,6 +3,7 @@ package mk.ukim.finki.wp.lab.web.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import mk.ukim.finki.wp.lab.model.Artist;
 import mk.ukim.finki.wp.lab.service.ArtistService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

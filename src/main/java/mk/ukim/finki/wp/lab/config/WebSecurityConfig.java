@@ -35,9 +35,9 @@ public class WebSecurityConfig {
                         .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
                 )
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/songs","/songs/submit","/artist", "/songDetails")
-                        .permitAll()
-                        .requestMatchers("/songDetails/addReview").hasAnyRole("ADMIN", "USER")
+                        .requestMatchers("/login").permitAll()
+                        .requestMatchers("/", "/songs","/songs/submit","/artist", "/songDetails","/songDetails/addReview")
+                        .authenticated()
                         .anyRequest().hasRole("ADMIN")
                 )
                 .formLogin((form) -> form

@@ -10,6 +10,8 @@ import mk.ukim.finki.wp.lab.service.SongService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
+
 
 import java.io.IOException;
 import java.util.List;
@@ -54,6 +56,7 @@ public class SongController {
 
 
     @PostMapping("/add")
+    @PreAuthorize("hasRole('ADMIN')")
     public String saveSong(@RequestParam String trackId,
                            @RequestParam String title,
                            @RequestParam String genre,
@@ -65,6 +68,7 @@ public class SongController {
     }
 
     @GetMapping("/edit/{songId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String editSong(@PathVariable Long songId,
                            @RequestParam String title,
                            @RequestParam String trackId,
@@ -80,12 +84,14 @@ public class SongController {
 
 
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String deleteSong(@PathVariable Long id){
         this.songService.deleteById(id);
         return "redirect:/songs";
     }
 
     @GetMapping("/edit-form/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String getEditSongForm(@PathVariable Long id, Model model){
         if(this.songService.findById(id).isPresent()){
             Song song = this.songService.findById(id).get();
@@ -99,6 +105,7 @@ public class SongController {
     }
 
     @GetMapping("/add-form")
+    @PreAuthorize("hasRole('ADMIN')")
     public String addSongPage(Model model){
         List<Album> albums = this.albumService.findAll();
         model.addAttribute("albums", albums);
