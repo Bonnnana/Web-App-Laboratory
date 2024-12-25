@@ -37,6 +37,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/", "/songs","/songs/submit","/artist", "/songDetails")
                         .permitAll()
+                        .requestMatchers("/songDetails/addReview").hasAnyRole("ADMIN", "USER")
                         .anyRequest().hasRole("ADMIN")
                 )
                 .formLogin((form) -> form
